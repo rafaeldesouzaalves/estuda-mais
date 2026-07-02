@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estude Mais</title>
+
+<!-- ============================================================
+     FONTES E ÍCONES
+     Space Grotesk (display, técnico) + Inter (corpo, legível) +
+     JetBrains Mono (dados, cronômetro, XP) — substitui a dupla
+     Fraunces/Plus Jakarta, que lia como "app infantil".
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+
+<link rel="stylesheet" href="estude-mais/assets/css/styles.css">
+</head>
+<body data-theme="light">
+
+<!-- ============================================================
+     TOASTS (mensagens rápidas de feedback)
+     ============================================================ -->
+<div id="toast-wrap"></div>
+
+<!-- ============================================================
+     PALETA DE COMANDOS (Ctrl/Cmd+K) — navegação e ações rápidas
+     ============================================================ -->
+<div id="cmdk-root"></div>
+
+<!-- ============================================================
+     TELA DE LOGIN
+     ============================================================ -->
+<section id="login-screen">
+  <div class="login-visual">
+    <div class="notebook-grid"></div>
+
+    <div class="brand"><div class="mark"><i data-lucide="flame"></i></div>Estude Mais</div>
+
+    <div class="quote">
+      <span class="eyebrow-dark">Plataforma de estudo</span>
+      <h2>Organização, foco e acompanhamento em um único lugar.</h2>
+      <p>Tarefas, calendário, repetição espaçada e desempenho — para alunos, professores e responsáveis.</p>
+      <div class="login-heat" id="login-heat"></div>
+    </div>
+  </div>
+
+  <div class="login-form-side">
+    <div class="theme-toggle-login">
+      <button class="icon-btn" id="theme-toggle-login-btn" title="Alternar tema"><i data-lucide="moon"></i></button>
+    </div>
+    <div class="login-box">
+      <span class="eyebrow">Bem-vindo de volta</span>
+      <h1>Entrar na conta</h1>
+
+      <div class="role-select" id="role-select">
+        <button class="role-card active" data-role="aluno"><i data-lucide="user"></i><span>Aluno</span></button>
+        <button class="role-card" data-role="professor"><i data-lucide="presentation"></i><span>Professor</span></button>
+        <button class="role-card" data-role="responsavel"><i data-lucide="users"></i><span>Responsável</span></button>
+      </div>
+
+      <form id="login-form">
+        <div class="field">
+          <label>E-mail</label>
+          <div class="input-wrap">
+            <i data-lucide="mail"></i>
+            <input type="email" id="login-email" placeholder="voce@email.com" required>
+          </div>
+        </div>
+        <div class="field">
+          <label>Senha</label>
+          <div class="input-wrap">
+            <i data-lucide="lock"></i>
+            <input type="password" id="login-pass" placeholder="••••••••" required>
+          </div>
+        </div>
+        <div class="login-row">
+          <label class="remember"><input type="checkbox" checked> Lembrar de mim</label>
+          <a class="forgot" href="#">Esqueci a senha</a>
+        </div>
+        <button type="submit" class="btn btn-primary btn-login" id="login-submit">
+          <span id="login-btn-text">Entrar como <span id="login-role-label">aluno</span></span>
+        </button>
+      </form>
+      <p class="login-footnote">Ainda não tem conta? <a class="forgot" href="#">Criar conta gratuita</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     APLICATIVO (após login)
+     ============================================================ -->
+<div id="app" class="hidden">
+
+  <!-- ---------- BARRA LATERAL ---------- -->
+  <aside class="sidebar">
+    <div class="brand"><div class="mark"><i data-lucide="flame"></i></div><b>Estude Mais</b></div>
+
+    <nav id="nav-links" style="display:flex; flex-direction:column; gap:2px; flex:1; overflow-y:auto;"></nav>
+
+    <div class="sidebar-footer">
+      <div class="dnd-toggle">
+        <span style="display:flex; align-items:center; gap:8px;"><i data-lucide="bell-off" style="width:15px;height:15px;"></i>Não perturbe</span>
+        <div class="switch" id="dnd-switch"></div>
+      </div>
+      <div class="user-mini">
+        <div class="avatar" id="sidebar-avatar">A</div>
+        <div>
+          <div class="u-name" id="sidebar-name">Aluno</div>
+          <div class="u-role" id="sidebar-role">aluno</div>
+        </div>
+        <button class="icon-btn logout-btn" id="logout-btn" title="Sair"><i data-lucide="log-out"></i></button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ---------- CONTEÚDO PRINCIPAL ---------- -->
+  <div class="main">
+    <header class="topbar">
+      <h1 id="topbar-title">Início</h1>
+      <div class="search-box" id="search-box-trigger">
+        <i data-lucide="search"></i><input placeholder="Buscar ou pressione Ctrl+K..." id="global-search" readonly>
+        <span class="kbd-hint"><kbd>Ctrl</kbd> <kbd>K</kbd></span>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" id="theme-toggle-app"><i data-lucide="moon"></i></button>
+        <button class="icon-btn" id="shortcuts-btn" title="Atalhos de teclado"><i data-lucide="keyboard"></i></button>
+        <div class="notif-wrap">
+          <button class="icon-btn" id="notif-btn"><i data-lucide="bell"></i><span class="notif-dot" id="notif-dot"></span></button>
+          <div class="notif-panel hidden" id="notif-panel"></div>
+        </div>
+      </div>
+    </header>
+
+    <main id="page-root" class="page"></main>
+  </div>
+
+  <!-- ---------- NAV MOBILE ---------- -->
+  <nav class="mobile-nav" id="mobile-nav"></nav>
+</div>
+
+<!-- ---------- ASSISTENTE IA (flutuante) ---------- -->
+<div id="ai-assistant" class="hidden">
+  <button class="ai-fab" id="ai-fab-btn"><i data-lucide="sparkles"></i></button>
+  <div class="ai-panel hidden" id="ai-panel">
+    <div class="ai-head"><i data-lucide="sparkles"></i><b>Mentor IA</b></div>
+    <div class="ai-body" id="ai-body"></div>
+    <div class="ai-suggestions" id="ai-suggestions"></div>
+    <div class="ai-input">
+      <input id="ai-input-field" placeholder="Pergunte algo...">
+      <button id="ai-send-btn"><i data-lucide="send"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     BLOQUEIO DE FOCO (overlay do "Modo Foco Rígido")
+     Ver comentário na seção 16 do script.js sobre as limitações
+     reais de um navegador para bloquear o sistema operacional.
+     ============================================================ -->
+<div id="focus-lock-overlay" class="hidden"></div>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script src="estude-mais/assets/js/script.js" defer></script>
+</body>
+</html>
