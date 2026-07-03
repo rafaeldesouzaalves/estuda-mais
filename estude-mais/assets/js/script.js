@@ -22,9 +22,9 @@ const state = {
 };
 
 const SUBJECTS = [
-  { id:'mat', name:'Matemática', color:'#2B3A8F', icon:'sigma', progress:72, teacher:'Profa. Helena', mastery:78 },
-  { id:'por', name:'Português', color:'#A5463C', icon:'book-open', progress:58, teacher:'Prof. Diego', mastery:54 },
-  { id:'his', name:'História', color:'#A9782A', icon:'landmark', progress:40, teacher:'Profa. Ana', mastery:46 },
+  { id:'mat', name:'Matemática', color:'#900020', icon:'sigma', progress:72, teacher:'Profa. Helena', mastery:78 },
+  { id:'por', name:'Português', color:'#ffcbdb', icon:'book-open', progress:58, teacher:'Prof. Diego', mastery:54 },
+  { id:'his', name:'História', color:'#2B3A8F ', icon:'landmark', progress:40, teacher:'Profa. Ana', mastery:46 },
   { id:'cie', name:'Ciências', color:'#3E7A5B', icon:'flask-conical', progress:85, teacher:'Prof. Caio', mastery:88 },
   { id:'ing', name:'Inglês', color:'#3E6C82', icon:'languages', progress:64, teacher:'Profa. Bia', mastery:61 },
   { id:'geo', name:'Geografia', color:'#6B5FA8', icon:'globe', progress:30, teacher:'Prof. Rui', mastery:35 },
